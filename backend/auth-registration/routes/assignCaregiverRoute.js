@@ -2,4 +2,6 @@ const { assign_member_controller } = require("../controller/assignCaregiverContr
 
 const router = require("express").Router();
 
-router.post("/assign:member_id",assign_member_controller);
+router.post("/",assign_member_controller);
+
+module.exports = router;

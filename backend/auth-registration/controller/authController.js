@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const conn = require('../config/db.config');
 const jwt = require('jsonwebtoken');
+const query = require('../query')
 
 //Registration controller
 const registration_controller = async (req, res) => {
@@ -8,8 +9,7 @@ const registration_controller = async (req, res) => {
         const { email, password, fname, lname } = req.body;
 
         //validate email id
-        const check_email_query = "select email from member where email = ?";
-        conn.query(check_email_query, [email], (err, result) => {
+        conn.query(query.check_email_query, [email], (err, result) => {
             if (err) {
                 throw err
             }
@@ -21,14 +21,12 @@ const registration_controller = async (req, res) => {
             const hashed_password = bcrypt.hashSync(password, salt);
 
             //saving member into db
-            const registration_query = "insert into member (fname,lname,email,password) values (?)"
             const registration_values = [fname, lname, email, hashed_password,];
-
-            conn.query(registration_query, [registration_values], (err, result) => {
+            conn.query(query.registration_query, [registration_values], (err, result) => {
                 if (err) {
                     return res.status(400).json({ message: "Registration not successfully!" });
                 };
-                return res.status(201).json({ insertedId: result.insertId, message: "Member registered successfully!" })
+                res.status(201).json({ insertedId: result.insertId, message: "Member registered successfully!" })
             });
         })
 
@@ -43,8 +41,7 @@ const login_controller = async (req, res) => {
         const { userid, password } = req.body
 
         // checking User
-        const check_user_query = "select id, password from member where email = ?";
-        conn.query(check_user_query, [userid], (err, result) => {
+        conn.query(query.check_user_query, [userid], (err, result) => {
             if (err) {
                 throw err
             }

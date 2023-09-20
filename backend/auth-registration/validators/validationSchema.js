@@ -35,6 +35,21 @@ const registration_schema = {
     },
 }
 
+const advance_search_schema = {
+    email: {
+        isEmail: true,
+        normalizeEmail: true,
+        errorMessage: "The field should contain proper email."
+    },
+    fname: {
+        notEmpty: true,
+        errorMessage: "First name should not be empty."
+    },
+    lname: {
+        notEmpty: true,
+        errorMessage: "Last name should not be empty."
+    }
+}
 module.exports = {
-    login_schema, registration_schema
+    login_schema, registration_schema, advance_search_schema
 }

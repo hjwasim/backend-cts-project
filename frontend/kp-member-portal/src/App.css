@@ -1,0 +1,15 @@
+body {
+  background-color: #fafafa;
+}
+
+.container {
+  background-color: #f7f7f7;
+}
+
+.navbar-nav a {
+  margin-left: 25px;
+}
+
+.login_page>.card {
+  max-width: 400px;
+}
